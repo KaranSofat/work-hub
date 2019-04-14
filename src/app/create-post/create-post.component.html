@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-12">
+       <div class="card">
+          <div class="row">
+             <div class="col-md-12">
+                <div class="jumbotron" style="padding: 29px;
+                   margin: 0px;">
+                   <h5>CREATE NEW POST</h5>
+                   <p>This is the plece where user van create new post.</p>
+                </div>
+             </div>
+          </div>
+          <form class="signup"  [formGroup]="postForm" (ngSubmit)="publishPost()">
+             <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group"  [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.title.errors }"> 
+                      <label for="email_id" class="control-label"> Title</label>
+                      <input type="text" [(ngModel)]="postData.title"   [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.title.errors }" formControlName="title" class="form-control"  class="form-control" id="email_id" name="email_name" placeholder="Title" 
+                         >
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group" [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.description.errors }"> 
+                      <label for="email_id" class="control-label">Description</label>
+                      <textarea class="form-control" rows="5" [(ngModel)]="postData.description"  [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.description.errors }" formControlName="description"  id="comment" placeholder="Description"></textarea>
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group" [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.category.errors }">
+                      <label for="email_id" class="control-label">Select Catogries</label>
+                      <select class="form-control" id="sel1" [(ngModel)]="postData.category"  [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.category.errors }" formControlName="category">
+                         <option value="">Select Catogries</option>
+                         <option value="{{cat.id}}" style="text-transform: capitalize;" *ngFor="let cat of categories">{{cat.name}}</option>
+                       
+                       
+                      </select>
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group"> 
+                        <div *ngFor='let url of urls' style="padding: 0 25px 0 0; float:left;">
+                             
+                              
+                              <img    [src]="url" class="rounded-circle" style="width:100px;height:150px;object-fit: cover">
+                              <a (click)="removeImg(url,$index)" class="card-link" style="cursor: pointer;"><i class="material-icons " style="position: absolute;color:red">
+                                    delete_forever
+                                    </i></a>
+                             </div>
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group">
+                      <label for="email_id" class="control-label">Upload Image</label>
+                      <div class="custom-file">
+                         <input type="file" class="custom-file-input" id="customFile"  (change)="onSelectFile($event)" multiple>
+                         <label class="custom-file-label" for="customFile">Choose file</label>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="form-group">
+                <!-- Submit button !-->
+                <button  class="btn btn-secondary"style="background:#4362a7;">Create Post</button>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>

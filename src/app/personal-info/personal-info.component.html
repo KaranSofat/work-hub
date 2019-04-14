@@ -1,0 +1,94 @@
+
+<div class="row">
+    <div class="col-md-12">
+            <div class="card">
+            	
+            	<form class="signup"  [formGroup]="updateInfo" (ngSubmit)="update()">
+            		<div class="row">
+            			<div class="col-md-6">
+            				<p style="    font-size: 32px;
+    font-weight: 500;"> Update personal Info</p>
+            			</div>
+            				<div class="col-md-6" >
+							<div class="form-group" style="float:right;"> 
+									<img *ngIf ="!profileImg" [src]="profileImg || './../assets/images/default.jpg'" class="rounded-circle"  alt="assets/images">
+                                    <img *ngIf ="profileImg" src="{{profileImg || './../assets/images/default.jpg'}}" class="rounded-circle" style="object-fit: cover;     width: 236px;
+									height: 240px;"  >
+									
+									<div class="file btn d-block btn-lg btn-primary" style="  position: relative;
+  overflow: hidden;">
+										Upload Profile
+							<input type="file"  (change)="onFileChanged($event)" name="file" [(ngModel)]="info.file" formControlName="file"  style=" position: absolute;
+							  font-size: 50px;
+							  opacity: 0;
+							  right: 0;
+							  top: 0;"/>
+						</div>
+								
+							</div>
+
+						</div>
+
+            		</div>
+            		<div class="row">
+
+            		
+
+	            		<div class="col-md-6">
+							<div class="form-group" [ngClass]="{ 'error': submitted && f.fname.errors }"> 
+								 
+									<label for="email_id" class="control-label"> First Name</label>
+									<input type="text" [(ngModel)]="info.fname"   [ngClass]="{ 'is-invalid': submitted && f.fname.errors }" formControlName="fname" class="form-control" id="email_id" name="email_name" placeholder="First Name" 
+									>
+								
+							</div>
+						</div>
+
+
+						<div class="col-md-6">
+							<div class="form-group"> 
+								
+									<label for="email_id" class="control-label">Last Name</label>
+									<input type="text" [(ngModel)]="info.lname"   [ngClass]="{ 'is-invalid': submitted && f.lname.errors }" formControlName="lname" class="form-control" id="email_id" name="email_name" placeholder="Last Name">
+								
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+	            		<div class="col-md-6">
+							<div class="form-group"> 
+								 
+									<label for="email_id" class="control-label">Phone Number</label>
+									<input type="text" [(ngModel)]="info.phone"   [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" formControlName="phone" class="form-control" id="email_id" name="email_name" placeholder="Phone Number" numbersOnly>
+								
+							</div>
+						</div>
+
+						<div class="col-md-6">
+						
+							<div class="form-group"> 
+								
+									<label for="email_id" class="control-label">Email</label>
+									<input type="email" class="form-control"[(ngModel)]="info.email"   [ngClass]="{ 'is-invalid': submitted && f.email.errors }" formControlName="email" id="email_id" name="email_name" placeholder="name@domain.com">
+								
+							</div>
+						
+						</div>
+					</div>
+
+
+
+					
+					<div class="form-group"> <!-- Submit button !-->
+						<button  class="btn btn-secondary"style="background:#4362a7;">Submit</button>
+					</div>	
+				</form>
+
+
+
+
+            </div>
+        </div>
+    </div>

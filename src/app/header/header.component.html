@@ -1,0 +1,115 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 bg-header">
+    <a class="col-sm-4 col-md-3 col-xl-2 navbar-brand mr-0 logo-white" id="sidebar" (click) = "sidebar($event)" id="sidebarCollpase" ><img class="img-fluid" routerLink = "/" src="./../assets/images/logo.png">
+    <i class="material-icons  swipe">dehaze</i>
+    <i class="material-icons  showLogin" (click)="loginMobile(loginPOP);$event.stopPropagation();">more_vert</i>
+    </a>
+    <div class="col-sm-8 col-md-9 col-xl-10 d-none d-md-block">
+       <div class="row">
+          <div class="col-sm-4 col-xl-5">
+             <h2 class="text-white text-truncate m-0">Buy, Sell, & talk equipment.</h2>
+          </div>
+          <div class="col-sm-8 col-xl-7" *ngIf="!isLoggedIn">
+             <form  [formGroup]="signinForm" (ngSubmit)="login(emailConfirm)">
+             <div class="form-row" >
+                <div class="col" [ngClass]="{ 'error': submitted && f.username.errors }">
+                   <input type="text" [(ngModel)]="loginData.email"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" class="form-control" formControlName="username"  placeholder="Phone, email, or  username"  [ngClass]="{ 'error': submitted && f.username.errors }" >
+                </div>
+                <div class="col" [ngClass]="{ 'error': submitted && f.password.errors }">
+                   <input type="password" [(ngModel)]="loginData.password"   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" formControlName="password"   class="form-control" placeholder="Password">
+                   <span style="color:white;cursor: pointer;" (click)= forgotPassword(forgotPasswordPOP)>forget Password?</span>
+                   <span style="color:white;cursor: pointer;float:right;"  class="checkbox checkbox-primary" >
+                   <input  id="checkbox3" type="checkbox" [(ngModel)]="loginData.rememberme" formControlName="remember">
+                   <label for="checkbox3">
+                   Remember me
+                   </label>
+                   </span> 
+                </div>
+                <button type="submit" class="btn btn-primary ml-2 mr-2">Login</button>
+                <button type="button" class="btn btn-secondary" (click)="signup()">Signup</button>
+             </div>
+             </form>
+          </div>
+          <div class="col-sm-8 col-xl-7 head_icon"  *ngIf="isLoggedIn">
+             <a class=" "  >
+             <i class="material-icons left-nav">
+             notifications_none
+             </i>
+             </a>
+             <a class=" " (click) = "lsitMessage()"  style="cursor: pointer;">
+                <i class="material-icons left-nav">
+                forum
+                </i>
+                <div class="badge badge-top"><span class="ng-binding">12</span></div>
+             </a>
+             <button type="button" class="btn btn-secondary" (click) = "logout()">LOGOUT</button>
+          </div>
+       </div>
+    </div>
+ </nav>
+ <ng-template #loginPOP>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">User Login</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+       <span aria-hidden="true">&times;</span>
+       </button>
+    </div>
+    <div class="modal-body">
+       <form action="/examples/actions/confirmation.php" method="post">
+          <div class="form-group">
+             <input type="text" class="form-control" placeholder="Username" required="required">
+          </div>
+          <div class="form-group">
+             <i class="fa fa-lock"></i>
+             <input type="password" class="form-control" placeholder="Password" required="required">					
+          </div>
+          <p>forget Password?</p>
+          <div class="form-group">
+             <button _ngcontent-c4="" class="btn btn-primary ml-2 mr-2" type="submit">Login</button>
+             <button _ngcontent-c4="" style="    background: #4362a7;
+                border: 1px solid #4362a7;float:right" class="btn btn-secondary" type="button">Signup</button>
+          </div>
+       </form>
+    </div>
+ </ng-template>
+ <ng-template #emailConfirm>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Confirm Email</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="cancelConfirmEmail();">
+       <span aria-hidden="true">&times;</span>
+       </button>
+    </div>
+    <div class="modal-body">
+       <p style="color:red">Your account is inactive*</p>
+       <form  [formGroup]="newPasswordForm"  (ngSubmit)="verifyCode()">
+       <label>Verification Code</label>
+       <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)] = "code.verifyCodes" formControlName="codeVerification" placeholder="Code" required="required">
+       </div>
+       <div class="form-group">
+          <button _ngcontent-c4="" class="btn btn-primary btn-success ml-2 mr-2" type="submit">Confirm</button>
+          <button _ngcontent-c4="" style="background:#4362a7" class="btn btn-primary ml-2 mr-2" type="button" (click)="resendCode()">Resend Code</button>
+       </div>
+       <div class="form-group">
+       </div>
+       </form>
+    </div>
+ </ng-template>
+ <ng-template #forgotPasswordPOP>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Forget Password</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="cancelForgotEmail()">
+       <span aria-hidden="true">&times;</span>
+       </button>
+    </div>
+    <div class="modal-body">
+       <form   [formGroup]="forgotPassForm"  (ngSubmit)="confirmForgotPass()">
+       <label>Email</label>
+       <div class="form-group" [ngClass]="{ 'is-invalid': submittedForget && resetPas.forgotPassw.errors }">
+          <input type="text" class="form-control" [(ngModel)] = "forgotPass.email"  [ngClass]="{ 'is-invalid': submittedForget && resetPas.forgotPassw.errors }" formControlName="forgotPassw" placeholder="Email" required="required">
+       </div>
+       <div class="form-group">
+          <button _ngcontent-c4="" class="btn btn-primary ml-2 mr-2" type="submit">Submit</button>
+       </div>
+       </form>
+    </div>
+ </ng-template>

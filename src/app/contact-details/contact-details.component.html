@@ -1,0 +1,56 @@
+<form [formGroup]="socialForm" (ngSubmit)="update()">
+<div class="row">
+    <div class="col-md-10 bottom-margin" >
+       <div class="card mt-4">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-10">
+                      <div class="jumbotron" style="padding: 29px;
+                    ">
+                      <h5>Contact Information</h5>
+                   </div>
+
+                   <div class="jumbotron" style="padding: 29px;
+                    ">
+                      <p>Email: <b>{{userDetails.email}}</b></p>
+                      <p>phone: <b>{{userDetails.phone}}</b></p>
+                   </div>
+
+                   
+
+                   <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group input-wrapper">
+                              <label for="stuff" class="fa fa-facebook-official input-icon" style="font-size: 45px;color:#3b5998"></label>
+                              <input type="text" class="form-control" [(ngModel)]="socialFormData.fb" formControlName="fb" class="form-control" style="border-left: none;" id="email_id" name="email_name" >
+
+                          </div>
+
+                          <div class="form-group input-wrapper">
+                              <label for="stuff" class="fa fa-linkedin-square input-icon"  style="font-size: 45px;color: #0077B5"></label>
+                              <input type="text" class="form-control" [(ngModel)]="socialFormData.link" formControlName="link" class="form-control" style="border-left: none;" id="email_id" name="email_name" >
+
+                          </div>
+
+                          <div class="form-group">
+                              <!-- Submit button !-->
+                              <button type="submit"  class="btn btn-secondary"style="background:#4362a7;">Update</button>
+                           </div>
+
+
+                        </div>
+                        </div>
+          
+
+
+
+
+                    </div>
+              </div>
+          </div>
+
+        </div>
+        </div>
+        </div>
+
+    </form>

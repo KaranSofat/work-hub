@@ -1,0 +1,144 @@
+<div class="row">
+    <div class="col-md-12 col-lg-9 bottom-margin">
+       <div class="card mt-4">
+          <div class="card-body">
+             <div class="row">
+                <div class="col-md-10">
+                   <img class="rounded-circle" src="{{postDetails[0].image}}" style="    width: 71px;"><span class="font-weight-bold pl-3">{{postDetails[0].name}} {{postDetails[0].lname}}</span>
+                   <span style="float:right;">
+                   <a href="#" class="card-link"><i class="material-icons ">
+                   bookmark_border
+                   </i>Save</a>
+                   <a (click)="postShare(share)" class="card-link upperIcons" style="cursor:pointer"><i class="material-icons ">
+                   share
+                   </i>Share</a>
+                   </span>
+                   <h5 class="card-title mt-3">{{postDetails[0].title}}</h5>
+                   <p class="card-text">
+                        {{postDetails[0].description}}
+                   </p>
+
+                   <div class="row post_images" >
+                        <img class="images_posts" *ngFor="let postsImages of postDetails[0].files" style="     width: 100px;
+                        height: 163px;
+                        object-fit: cover;   margin-right: 30px;" src = "{{postsImages}}">
+                     
+                       </div>
+                </div>
+                <div class="col-md-2 icon-ba">
+                   <span class="general">
+                     General
+                   </span>
+                   <a href="#" class="card-link">
+                      <i class="material-icons ">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                         </svg>
+                      </i>
+                      22
+                   </a>
+                   <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">star</i>33</a>
+                   <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">comment</i>55</a>
+                </div>
+             </div>
+             <div class="card-body">
+                <h4>2 commments</h4>
+             </div>
+             <div class="card-body" *ngFor="let posts of commentsPost">
+                <div class="row">
+                   <div class="col-sm-2">
+                      <div class="thumbnail"><img class="rounded-circle" style="width: 68px;" src={{posts.image}}></div>
+                   </div>
+                   <div class="col-sm-10">
+                      <div class="card card-inner">
+                         <div class="card-title-top">
+                            <strong class="font-weight-bold">{{posts.name}} {{posts.lname}} </strong><span>commented 5 days ago</span> 
+                         </div>
+                         <h5 class="card-title mt-3">{{postDetails[0].title}}</h5>
+                         <p class="card-text">{{posts.comment}}</p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             
+             <div class="card-body comments">
+                <div class="row ">
+                   <div class="col-sm-2">
+                      <div class="thumbnail"><img class="rounded-circle" *ngIf=
+                        "userDetails" src="{{userDetails.image}}" style="width: 68px;">
+                        <img class="rounded-circle" *ngIf=
+                        "!userDetails" src="./../assets/images/deault.png" style="width: 68px;"></div>
+                   </div>
+                   <div class="col-sm-10">
+                      <form [formGroup]="commentForm" (ngSubmit)="comment()">
+                         <div class="row">
+                            <div class="col-md-8 "  [ngClass]="{ 'is-invalid': submitted && f.comment.errors }">
+                               <textarea class="form-control" [(ngModel)]="commentsData.comment"   [ngClass]="{ 'is-invalid': submitted && f.comment.errors }" formControlName="comment" placeholder="Add a Comment..." rows="5" cols="8"> </textarea>
+                            </div>
+                            <div class="col-md-4 " style="
+                               margin-top: 10px;
+                               ">
+                               <button type="submit" class="btn btn-secondary">Add commment</button>
+                            </div>
+                         </div>
+                         <div class="form-row col-md-9 fix_icons">
+                            <a class="nav-link ">
+                            <i class="material-icons icons_color" >
+                            sentiment_very_satisfied
+                            </i>
+                            </a>
+                            <a class="nav-link ">
+                            <i class="material-icons icons_color">
+                            camera_alt
+                            </i>
+                            </a>
+                            <a class="nav-link ">
+                            <i class="material-icons icons_color">
+                            videocam
+                            </i>
+                            </a>
+                            <a class="nav-link ">
+                            <i class="material-icons icons_color">
+                            gif
+                            </i>
+                            </a>
+                            <a class="nav-link ">
+                            <i class="material-icons icons_color">
+                            label
+                            </i>
+                            </a>
+                         </div>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+ <ng-template #share>
+      <div class="modal-header">
+            <h4 class="modal-title pull-left">Share</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefShare.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+            <form>
+                  <label>Share the post with the world</label>
+                    <div class="form-group">
+                        <share-button text="Share" [showText]="true" button="facebook"  [showCount]="true" [url]=urlShare></share-button>
+<share-button button="linkedin" text="linkedin"  [showText]="true" [showCount]="true" [url]=urlShare></share-button>
+<share-button button="twitter" text="Tweet" [showText]="true" [showCount]="true" [url]=urlShare></share-button>
+                       
+                    </div>
+                 
+                   
+               
+                </form>
+     
+      </div>
+    </ng-template>
