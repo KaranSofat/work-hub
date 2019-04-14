@@ -566,3 +566,74 @@ color: #3374c6;
           width:50%;
           background:white;
       }
+      .forg {
+        width: 50%;
+        float: left;
+        display: table;
+    }
+    .forg span {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .img-fluid , .swipe{display:table-cell;vertical-align: middle}
+      @media only screen and (max-width: 1366px) {
+
+       
+    }
+    @media screen and (min-width: 769px) {  
+        .logo-white {
+            display: table;
+        }
+        
+      }
+      
+      /* 
+        ##Device = Tablets, Ipads (portrait)
+        ##Screen = B/w 768px to 1024px
+      */
+      
+      @media (min-width: 768px) and (max-width: 1024px) {
+        
+        .forg label {
+            font-size: 13px;
+        }
+        
+      }
+      @media only screen and (max-width: 768px) {
+        .d-md-block{display: none!important; }
+      }
+      /* 
+        ##Device = Tablets, Ipads (landscape)
+        ##Screen = B/w 768px to 1024px
+      */
+      
+      @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        .forg label {
+            font-size: 13px;
+        }
+        
+      }
+      
+      /* 
+        ##Device = Low Resolution Tablets, Mobiles (Landscape)
+        ##Screen = B/w 481px to 767px
+      */
+      
+      @media (min-width: 481px) and (max-width: 767px) {
+        
+        .forg label {
+            font-size: 13px;
+        }
+      }
+      
+      /* 
+        ##Device = Most of the Smartphones Mobiles (Portrait)
+        ##Screen = B/w 320px to 479px
+      */
+      
+      @media (min-width: 320px) and (max-width: 480px) {
+        
+        .forg label {
+            font-size: 13px;
+        }
+      }

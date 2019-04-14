@@ -16,17 +16,25 @@
                 </div>
                 <div class="col" [ngClass]="{ 'error': submitted && f.password.errors }">
                    <input type="password" [(ngModel)]="loginData.password"   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" formControlName="password"   class="form-control" placeholder="Password">
-                   <span style="color:white;cursor: pointer;" (click)= forgotPassword(forgotPasswordPOP)>forget Password?</span>
-                   <span style="color:white;cursor: pointer;float:right;"  class="checkbox checkbox-primary" >
-                   <input  id="checkbox3" type="checkbox" [(ngModel)]="loginData.rememberme" formControlName="remember">
-                   <label for="checkbox3">
-                   Remember me
-                   </label>
-                   </span> 
+                   
+                   
                 </div>
                 <button type="submit" class="btn btn-primary ml-2 mr-2">Login</button>
                 <button type="button" class="btn btn-secondary" (click)="signup()">Signup</button>
              </div>
+
+
+             <div class="forg">
+               <span style="color:white;cursor: pointer;" (click)= forgotPassword(forgotPasswordPOP)><label>forget Password?</label></span>
+               <span style="color:white;cursor: pointer;"  class="checkbox checkbox-primary" >
+               <input  id="checkbox3" type="checkbox" [(ngModel)]="loginData.rememberme" formControlName="remember">
+               <label for="checkbox3">
+               Remember me
+               </label>
+               </span> 
+              </div>
+
+              
              </form>
           </div>
           <div class="col-sm-8 col-xl-7 head_icon"  *ngIf="isLoggedIn">
