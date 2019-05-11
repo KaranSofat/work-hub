@@ -1,0 +1,39 @@
+
+    <div class="sidebars" id="contain">
+                <nav class="sidebar-nav">
+                  <ul class="nav">
+                    <li class="nav-item" style="cursor: pointer;" (click) = "redirectUrl('dashboard')">
+                      <a class="nav-link"  [ngClass]="{'adminActive':selectedPage == 'dashboard'}">
+                        <i class="nav-icon icon-speedometer"></i> Dashboard
+                     
+                      </a>
+                    </li>
+                  
+                    <li class="nav-item" (click) = "redirectUrl('users')" style="cursor: pointer;">
+                      <a class="nav-link "  [ngClass]="{'adminActive':selectedPage == 'users'}">
+                        <i class="nav-icon icon-user"></i> Users</a>
+                    </li>
+                    <li class="nav-item"  (click) = "redirectUrl('posts')" style="cursor: pointer;">
+                      <a class="nav-link"  [ngClass]="{'adminActive':selectedPage == 'posts'}">
+                        <i class="nav-icon icon-note"></i> Posts</a>
+                    </li>
+                    <li class="nav-item"  (click) = "redirectUrl('cat')" style="cursor: pointer;">
+                        <a class="nav-link" [ngClass]="{'adminActive':selectedPage == 'cat'}">
+                          <i class="nav-icon icon-grid"></i> Categories</a>
+                      </li>
+                      <li class="nav-item"  (click) = "redirectUrl('comments')" style="cursor: pointer;">
+                          <a class="nav-link"  [ngClass]="{'adminActive':selectedPage == 'comments'}">
+                            <i class="nav-icon icon-people"></i> Comments</a>
+                        </li>
+                        <li class="nav-item"  (click) = "redirectUrl('news')" style="cursor: pointer;">
+                            <a class="nav-link"  [ngClass]="{'adminActive':selectedPage == 'news'}">
+                              <i class="nav-icon icon-people"></i> news</a>
+                          </li>
+                   
+                 
+                  </ul>
+                </nav>
+               
+              </div>
+
+         

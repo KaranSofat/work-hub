@@ -1,0 +1,189 @@
+
+         <form  [formGroup]="catForm" (submit) = "createThread()">
+         <div class="bg-white create-thread p-3 mt-3">
+                <div class="input-group input-group-lg">
+                   <input type="text"  style="font-size: inherit" [(ngModel)]="cat.title"  [ngClass]="{ 'is-invalid': submitted && f.title.errors }"  formControlName="title" class="form-control" placeholder="Start a thread..." aria-label="Text input with dropdown button">
+                   <div class="input-group-append">
+                        <select class="browser-default custom-select" style="color: #495057;" [(ngModel)]="cat.name"  [ngClass]="{ 'is-invalid': submitted && f.name.errors }"  formControlName="name" style="height: 50px;">
+                              <option value="" >Select a Category</option>
+                              <option *ngFor="let cat of categories" value="{{cat.id}}" style="text-transform: capitalize" >{{cat.name}}</option>
+                           
+                            </select>
+                   </div>
+                   <button type="submit" class="btn btn-primary ml-2 mr-2" >Create Thread</button>
+                </div>
+             </div>
+            </form>
+    <div class="row">
+        <div class="col-md-10 bottom-margin" >
+           <div class="card mt-4" *ngFor="let posts of listPosts">
+              <div class="card-body" [ngClass]="{'border-blue':posts.categoryName == 'general', 'border-green': posts.categoryName == 'buy', 'border-pink':posts.categoryName == 'sell','border-borrow':posts.categoryName == 'borrow'}">
+                 <div class="row">
+                     <div class="col-md-10" style="cursor: pointer;" (click) = "details($event,posts)">
+                       <img  
+                        [popper]="popper1Content"
+                        (popperOnShown)="onShown($event,posts)"
+                        [popperTrigger]="'hover'"
+                        [popperPositionFixed]="true"
+                        [popperPlacement]="'right-start'" popperApplyClass = "customPop" class="rounded-circle"  style="    width: 63px;
+                        object-fit: cover;
+                        height: 67px;" src="{{posts.image}}" ><span class="font-weight-bold pl-3"  style="text-transform: capitalize;">{{posts.name}} {{posts.lname}}</span>
+                       <!--  <span class="general">General</span> -->
+                       <h5 class="card-title mt-3">{{posts.title}}</h5>
+                       <p class="card-text" [innerHTML]="posts.description | words : 50 : '.....'">
+                       </p>
+                       <div class="row post_images" >
+                        <img class="images_posts" *ngFor="let postsImages of posts.files" style="     width: 173px;
+                        height: 164px;
+                        object-fit: cover;   margin-right: 30px;" (click) = "openImage(images,$event,postsImages)" src = "{{postsImages}}">
+                     
+                       </div>
+
+                       <a (click) = "bookMarkPost(posts,$event)" class="card-link"><i class="material-icons ">
+                       bookmark_border
+                       </i>Save</a>
+                       <a  (click)= "openShare(share,$event,posts)" class="card-link"><i class="material-icons ">
+                       share
+                       </i>Share</a>
+                    </div>
+                    <div class="col-md-2 icon-ba">
+                       <span [ngClass]="{'general':posts.categoryName == 'general', 'buy': posts.categoryName == 'buy', 'sell':posts.categoryName == 'sell','borrow':posts.categoryName == 'borrow'}">
+                          <!-- <i class="material-icons" style="margin: -2px;">stop</i> -->{{posts.categoryName}}
+                       </span>
+                       <a href="#" class="card-link">
+                          <i class="material-icons ">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                             </svg>
+                          </i>{{posts.viewsCount}}
+                       </a>
+                       <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">star</i>{{posts.bookmarksCount}}</a>
+                       <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">comment</i>{{posts.commentsCount}}</a>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <div class="row" *ngIf = "listPosts">
+        <div class="col-md-10 bottom-margin"  *ngIf = "listPosts.length == 0">
+           <div class="card mt-4">
+     <div style="
+     text-align: center;
+     font-size: 21px;
+     margin: 0px 0 0 0;
+     padding: 22px 0 24px 13px;
+ ">No post found.</div>
+     </div>
+     </div>
+     </div>
+
+
+
+     <ng-template #images>
+      <div class="modal-header">
+            <h4 class="modal-title pull-left">Image</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefImage.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <img src="{{selectedImage}}">
+
+     
+      </div>
+    </ng-template>
+     
+     <ng-template #share>
+         <div class="modal-header">
+               <h4 class="modal-title pull-left">Share</h4>
+           <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefShare.hide()">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+
+               <form>
+                     <label>Share the post with the world</label>
+                       <div class="form-group">
+                           <share-button text="Share" [showText]="true" button="facebook"  [showCount]="true" [url]=urlShare></share-button>
+<share-button button="linkedin" text="linkedin"  [showText]="true" [showCount]="true" [url]=urlShare></share-button>
+<share-button button="twitter" text="Tweet" [showText]="true" [showCount]="true" [url]=urlShare></share-button>
+                          
+                       </div>
+                    
+                      
+                  
+                   </form>
+        
+         </div>
+       </ng-template>
+
+
+       <ng-template #messagePop>
+            <div class="modal-header">
+                  <h4 class="modal-title pull-left">Message</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefMessage.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               <form  [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+                  <div class="row">
+                     <div class="col" style="    border-bottom: 1px solid #e9ecef;
+                     padding-bottom: 14px;">
+                        <img class="rounded-circle"  *ngIf = "currentSelectedPost" style="width: 63px;" src="{{currentSelectedPost.image}}"><span class="font-weight-bold pl-3"  *ngIf = "currentSelectedPost">{{currentSelectedPost.name}} {{currentSelectedPost.lname}}</span>
+                     </div>
+                     </div>
+                  <div class="row">
+                        <div class="col-md-12">
+                           <div class="form-group"  [ngClass]="{ 'is-invalid': submittedMessage && fMessage.title.errors }"> 
+                              <label for="email_id" class="control-label"> Title</label>
+                              <input type="text" [(ngModel)]="messageData.title"   [ngClass]="{ 'is-invalid': submittedMessage && fMessage.title.errors }" formControlName="title" class="form-control"  class="form-control" id="email_id" name="email_name" placeholder="Title" 
+                                 >
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row" style="margin-top: 12px;">
+                        <div class="col-md-12">
+                           <div class="form-group" [ngClass]="{ 'is-invalid': submittedMessage && fMessage.description.errors }"> 
+                              <label for="email_id" class="control-label">Description</label>
+                              <textarea class="form-control" rows="5" [(ngModel)]="messageData.description"  [ngClass]="{ 'is-invalid': submittedMessage && fMessage.description.errors }" formControlName="description"  id="comment" placeholder="Description"></textarea>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                           <!-- Submit button !-->
+                           <button type="submit" class="btn btn-secondary"style="background:#4362a7;">Send Message</button>
+                        </div>
+                     </form>
+            </div>
+          </ng-template>
+
+
+
+
+
+
+    <popper-content #popper1Content style="width:50%; background:white">
+      
+      <div class="row">
+         <div class="col">
+               <img class="rounded-circle" *ngIf = "currentSelectedPost" style="width: 63px;" src="{{currentSelectedPost.image}}"><span class="font-weight-bold pl-3"  *ngIf = "currentSelectedPost">{{currentSelectedPost.name}} {{currentSelectedPost.lname}}</span>
+         </div>
+         
+         <div class="col">
+               <button type="button" (click)= "message(messagePop)"class="btn btn-secondary " style="float:right; background: #4362a7;    margin-top: 14px;"><i  style="margin:0 9px 0 0;" class="fa fa-envelope" aria-hidden="true"></i>Message</button>
+         </div>
+         <div class="col-md-8 ml-5 message-pop"  *ngIf = "currentSelectedPost">
+         <p style="font-size:12px;margin-left: 45px;"> posted  {{currentSelectedPost.date | timeAgo}}  Joined {{currentSelectedPost.created_at | date}}</p>
+     </div>
+        
+         
+      </div>   
+      
+     
+          
+        
+        
+       </popper-content>

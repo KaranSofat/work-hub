@@ -1,0 +1,393 @@
+
+ <div class="container-fluid">
+    <div id="ui-view">
+       <div>
+       
+          <div class="animated fadeIn">
+             <div class="card">
+                <div class="card-header">
+                   <i class="fa fa-edit"></i> Users
+                   <div class="card-header-actions">
+                     
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                      <div class="row">
+                         <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="DataTables_Table_0_length">
+                               <label>
+                                  Show 
+                                  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" [(ngModel)]="perPage" class="custom-select custom-select-sm form-control form-control-sm">
+                                     <option value="10">10</option>
+                                     <option value="25">25</option>
+                                     <option value="50">50</option>
+                                     <option value="100">100</option>
+                                  </select>
+                                  entries
+                               </label>
+                            </div>
+                         </div>
+                         <div class="col-sm-12 col-md-6">
+                            <div id="DataTables_Table_0_filter" class="dataTables_filter searchBar"><label>Search:<input type="search" [(ngModel)]="searchText" class="form-control form-control-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div>
+                          
+                           </div>
+                         
+                      </div>
+                      <div>
+                           <button _ngcontent-c4="" (click)="addUser(addUserPop);"aria-pressed="true" class="btn btn-block btn-outline-primary active" type="button" style="
+                           width: 111px;
+                           margin: 0 0 17px 0;
+                       ">Add User</button>
+                      </div>
+                        
+                  
+                      <div class="row">
+                         <div class="col-sm-12">
+                            <table class="table table-striped table-bordered datatable dataTable no-footer  table-responsive-sm table-bordered table-striped table-sm" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important">
+                               <thead>
+                                  <tr role="row">
+                                      <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 150px;">#</th>
+                                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 281px;">Username</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 240.2px;">Email</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 240.2px;">Date registered</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 109px;">Phone</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 121.8px;">Status</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 249.2px;">Actions</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <tr role="row" class="odd" *ngFor="let users of listUsers| paginate: { itemsPerPage: perPage, currentPage: p } | filter:searchText;index as i">
+                                      <td class="sorting_1">{{i+1}}</td>
+                                     <td class="sorting_1">{{users.name}} {{users.lname}}</td>
+                                     <td class="sorting_1">{{users.email}}</td>
+                                     <td>{{users.created_at}}</td>
+                                     <td>{{users.phone}}</td>
+                                     <td>
+                                        <span class="badge badge-success" *ngIf="users.status==1">Active</span>
+                                        <span class="badge badge-danger" *ngIf="users.status==0">Inactive</span>
+                                     </td>
+                                     <td>
+                                        <a class="btn btn-success" style="margin-right: 10px;" (click)="viewUserInfo(info,users)">
+                                        <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-info" style="margin-right: 10px;" (click)="updateUser(updateUserPop,users)">
+                                        <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger" (click) = "deleteUser(templateDelete,users.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                        </a>
+                                     </td>
+                                  </tr>
+                   
+                               </tbody>
+                            </table>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">{{perPage}} of {{totalEntries}} entries</div>
+                         </div>
+                         <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                               <ul class="pagination">
+                                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                               </ul>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+<ng-template #info>
+      <div class="modal-header">
+            <h4 class="modal-title pull-left">User Details</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="container">
+                  <div class="row">
+                    <div class="span2">
+                      <img src="{{currentUser.image}}" style="height: 350px;width: 330px;object-fit: cover"  alt="" class="img-rounded">
+                    </div>
+                    <div class="span4" style="margin-left: 34px">
+                      <blockquote>
+                        <p>{{currentUser.name}} {{currentUser.lname}} <span class="badge badge-success" *ngIf="currentUser.status==1">Active</span>
+                           <span class="badge badge-danger" *ngIf="currentUser.status==0">Inactive</span></p>
+                       
+                      </blockquote>
+                      <p>
+                        <i class="icon-envelope"></i> {{currentUser.phone}} <br>
+                        <i class="cui-tablet icons"></i> {{currentUser.email}} <br>
+                        <i class="cui-justify-center icons"></i> {{currentUser.created_at}}<br>
+                        <i class="icon-globe"></i> {{currentUser.link_url || '-'}} <br>
+                        <i class="cui-user-follow icons"></i> {{currentUser.fb_url || '-'}} 
+                        
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+     
+      </div>
+    </ng-template> 
+
+
+   <ng-template #addUserPop>
+         <div class="modal-header">
+               <h4 class="modal-title pull-left">Add User</h4>
+           <button type="button" class="close pull-right" aria-label="Close" (click)="cancelAddUser()">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+            
+<div class="row">
+      <div class="col-md-12">
+              <div class="card">
+                 
+                 <form class="signup"  [formGroup]="signupForm" (ngSubmit)="signup()">
+                    <div class="row">
+            
+                          <div class="col-md-12" >
+                       <div class="form-group" style="float:right;"> 
+                             <img *ngIf ="!profileImg" [src]="profileImg || './assets/images/default.jpg'" class="rounded-circle"  alt="assets/images">
+                                      <img *ngIf ="profileImg" src="{{profileImg || './assets/images/default.jpg'}}" class="rounded-circle" style="object-fit: cover; width: 197px;
+                                      height: 200px;" >
+                             
+                             <div class="file btn d-block btn-lg btn-primary" style="  position: relative;
+    overflow: hidden;">
+                                Upload Profile
+                       <input type="file"  (change)="onFileChanged($event)" name="file" [(ngModel)]="signupData.file" formControlName="file"  style=" position: absolute;
+                         font-size: 50px;
+                         opacity: 0;
+                         right: 0;
+                         top: 0;"/>
+                    </div>
+                          
+                       </div>
+  
+                    </div>
+  
+                    </div>
+                    <div class="row">
+  
+                    
+  
+                       <div class="col-md-6">
+                       <div class="form-group" [ngClass]="{ 'error': submitted && f.fname.errors }"> 
+                           
+                             <label for="email_id" class="control-label"> First Name</label>
+                             <input type="text" [(ngModel)]="signupData.name"   [ngClass]="{ 'is-invalid': submitted && f.fname.errors }" formControlName="fname" class="form-control" id="email_id" name="email_name" placeholder="First Name" 
+                             >
+                          
+                       </div>
+                    </div>
+  
+  
+                    <div class="col-md-6">
+                       <div class="form-group"> 
+                          
+                             <label for="email_id" class="control-label">Last Name</label>
+                             <input type="text" [(ngModel)]="signupData.lname"   [ngClass]="{ 'is-invalid': submitted && f.lname.errors }" formControlName="lname" class="form-control" id="email_id" name="email_name" placeholder="Last Name">
+                          
+                       </div>
+                    </div>
+                 </div>
+  
+  
+                 <div class="row">
+                       <div class="col-md-6">
+                       <div class="form-group"> 
+                           
+                             <label for="email_id" class="control-label">Password</label>
+                             <input type="password" [(ngModel)]="signupData.password"   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" formControlName="password" class="form-control" id="email_id" name="email_name" placeholder="Password">
+                          
+                       </div>
+                    </div>
+  
+                    <div class="col-md-6">
+                       <div class="form-group"> 
+                          
+                             <label for="email_id" class="control-label">Confirm password</label>
+                             <input type="password" [(ngModel)]="signupData.c_password"   [ngClass]="{ 'is-invalid': submitted && f.cPass.errors }" formControlName="cPass" class="form-control" id="email_id" name="email_name" placeholder="Confirm password">
+                          
+                       </div>
+                    </div>
+                 </div>
+  
+  
+  
+  
+                 <div class="row">
+                       <div class="col-md-6">
+                       <div class="form-group"> 
+                           
+                             <label for="email_id" class="control-label">Phone Number</label>
+                             <input type="text" [(ngModel)]="signupData.phone"   [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" formControlName="phone" class="form-control" id="email_id" name="email_name" placeholder="Phone Number" numbersOnly>
+                          
+                       </div>
+                    </div>
+  
+                    <div class="col-md-6">
+                    
+                       <div class="form-group"> 
+                          
+                             <label for="email_id" class="control-label">Email</label>
+                             <input type="email" class="form-control"[(ngModel)]="signupData.email"   [ngClass]="{ 'is-invalid': submitted && f.email.errors }" formControlName="email" id="email_id" name="email_name" placeholder="name@domain.com">
+                          
+                       </div>
+                    
+                    </div>
+                 </div>
+  
+  
+  
+                 
+                 <div class="form-group"> <!-- Submit button !-->
+                    <button  class="btn btn-secondary" style="background:#4362a7;color:white">Submit</button>
+                 </div>	
+              </form>
+  
+  
+  
+  
+              </div>
+          </div>
+      </div>
+  
+        
+         </div>
+       </ng-template> 
+ 
+
+       <ng-template #updateUserPop>
+            <div class="modal-header">
+                  <h4 class="modal-title pull-left">Update User</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefUpdate.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               
+                  <div class="row">
+                        <div class="col-md-12">
+                                <div class="card">
+                                   
+                                   <form class="signup"  [formGroup]="updateInfo" (ngSubmit)="update()">
+                                      <div class="row">
+                                         <div class="col-md-6">
+                                            <p style="    font-size: 32px;
+                        font-weight: 500;"> Update personal Info</p>
+                                         </div>
+                                            <div class="col-md-6" >
+                                         <div class="form-group" style="float:right;"> 
+                                               <img *ngIf ="!profileImg" [src]="profileImg || './assets/images/default.jpg'" class="rounded-circle"  alt="assets/images">
+                                                        <img *ngIf ="profileImg" src="{{profileImg || './assets/images/default.jpg'}}" class="rounded-circle" style="object-fit: cover;     width: 236px;
+                                               height: 240px;"  >
+                                               
+                                               <div class="file btn d-block btn-lg btn-primary" style="  position: relative;
+                      overflow: hidden;">
+                                                  Upload Profile
+                                         <input type="file"  (change)="onFileChanged($event)" name="file" [(ngModel)]="info.file" formControlName="file"  style=" position: absolute;
+                                           font-size: 50px;
+                                           opacity: 0;
+                                           right: 0;
+                                           top: 0;"/>
+                                      </div>
+                                            
+                                         </div>
+                    
+                                      </div>
+                    
+                                      </div>
+                                      <div class="row">
+                    
+                                      
+                    
+                                         <div class="col-md-6">
+                                         <div class="form-group" [ngClass]="{ 'error': submitted && upateF.fname.errors }"> 
+                                             
+                                               <label for="email_id" class="control-label"> First Name</label>
+                                               <input type="text" [(ngModel)]="infos.fname"   [ngClass]="{ 'is-invalid': submitted && upateF.fname.errors }" formControlName="fname" class="form-control" id="email_id" name="email_name" placeholder="First Name" 
+                                               >
+                                            
+                                         </div>
+                                      </div>
+                    
+                    
+                                      <div class="col-md-6">
+                                         <div class="form-group"> 
+                                            
+                                               <label for="email_id" class="control-label">Last Name</label>
+                                               <input type="text" [(ngModel)]="infos.lname"   [ngClass]="{ 'is-invalid': submitted && upateF.lname.errors }" formControlName="lname" class="form-control" id="email_id" name="email_name" placeholder="Last Name">
+                                            
+                                         </div>
+                                      </div>
+                                   </div>
+                    
+                    
+                                   <div class="row">
+                                         <div class="col-md-6">
+                                         <div class="form-group"> 
+                                             
+                                               <label for="email_id" class="control-label">Phone Number</label>
+                                               <input type="text" [(ngModel)]="infos.phone"   [ngClass]="{ 'is-invalid': submitted && upateF.phone.errors }" formControlName="phone" class="form-control" id="email_id" name="email_name" placeholder="Phone Number" numbersOnly>
+                                            
+                                         </div>
+                                      </div>
+                    
+                                      <div class="col-md-6">
+                                      
+                                         <div class="form-group"> 
+                                            
+                                               <label for="email_id" class="control-label">Email</label>
+                                               <input type="email" class="form-control"[(ngModel)]="infos.email"   [ngClass]="{ 'is-invalid': submitted && upateF.email.errors }" formControlName="email" id="email_id" name="email_name" placeholder="name@domain.com">
+                                            
+                                         </div>
+                                      
+                                      </div>
+                                   </div>
+                    
+                    
+                    
+                                   
+                                   <div class="form-group"> <!-- Submit button !-->
+                                      <button  class="btn btn-secondary"style="background:#4362a7;color:white">Submit</button>
+                                   </div>	
+                                </form>
+                    
+                    
+                    
+                    
+                                </div>
+                            </div>
+                        </div>
+                    
+     
+           
+            </div>
+          </ng-template> 
+
+
+          <ng-template #templateDelete>
+               <div class="modal-header">
+                  <h4 class="modal-title pull-left">Delete User</h4>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefDel.hide()">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <p>Are You sure you want to delete this User?</p>
+                  <button _ngcontent-c4="" class="btn btn-danger" type="button" (click) = "confirmDelete()">Yes</button>
+                  <button _ngcontent-c4="" class="btn btn-success" style="float:right" type="button" (click)="modalRefDel.hide()">No</button>
+               </div>
+            </ng-template>

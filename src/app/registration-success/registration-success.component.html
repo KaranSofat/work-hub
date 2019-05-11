@@ -1,0 +1,31 @@
+<div class="jumbotron text-xs-center">
+    <h1 class="display-3">Thank You!</h1>
+    <p class="lead">A Code is sent to your registerd Email Id/ phone number. Please fill the code when you logged In first time.</p>
+    <p class="lead"><strong>Please check your email</strong> for further instructions on how to complete your account setup.</p>
+    <hr>
+    <form [formGroup]="newPasswordForm" (ngSubmit)="confirm()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"> 
+								 
+                    <label for="email_id" class="control-label">Verfication Code</label>
+                    <input type="text" [(ngModel)] = "code.verifyCodes" formControlName="codeVerification" class="form-control" id="email_id" name="code" placeholder="Code" 
+                    >
+                  
+                </div>
+                <div class="form-group"> <!-- Submit button !-->
+                  <button type="submit" class="btn btn-secondary btn-success">Confirm</button>
+                  <button  class="btn btn-secondary "style="background:#4362a7; margin-left: 12px;" type="button" (click) = "resend()">Resend</button>
+                </div>
+              </div>
+            </div>
+
+    </form>
+
+    <p>
+      Having trouble? <a href="">Contact us</a>
+    </p>
+    <p class="lead">
+      <a class="btn btn-primary btn-md" [routerLink]="['/']" role="button">Continue to homepage</a>
+    </p>
+  </div>

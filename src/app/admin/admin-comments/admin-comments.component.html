@@ -1,0 +1,133 @@
+
+ <div class="container-fluid">
+    <div id="ui-view">
+       <div>
+       
+          <div class="animated fadeIn">
+             <div class="card">
+                <div class="card-header">
+                   <i class="fa fa-edit"></i> Comments
+                   <div class="card-header-actions">
+                     
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                      <div class="row">
+                         <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="DataTables_Table_0_length">
+                               <label>
+                                  Show 
+                                  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" [(ngModel)]="perPage" class="custom-select custom-select-sm form-control form-control-sm">
+                                     <option value="10">10</option>
+                                     <option value="25">25</option>
+                                     <option value="50">50</option>
+                                     <option value="100">100</option>
+                                  </select>
+                                  entries
+                               </label>
+                            </div>
+                         </div>
+                         <div class="col-sm-12 col-md-6">
+                            <div id="DataTables_Table_0_filter" class="dataTables_filter searchBar"><label>Search:<input type="search" [(ngModel)]="searchText" class="form-control form-control-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-sm-12">
+                            <table class="table table-striped table-bordered datatable dataTable no-footer  table-responsive-sm table-bordered table-striped table-sm" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important">
+                               <thead>
+                                  <tr role="row">
+                                      <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 100px;">#</th>
+                                      <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 100px;">Username</th>
+                                      <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 281px;">Title</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column descending" style="width: 240px;">Description</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column descending" style="width: 150px;">Date</th>
+                                     
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column descending" style="width: 100px;">Actions</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <tr role="row" class="odd" *ngFor="let comments of listComments| paginate: { itemsPerPage: perPage, currentPage: p } | filter:searchText;index as i">
+                                      <td class="sorting_1">{{i+1}}</td>
+                                      <td class="sorting_1">{{comments.name}} {{comments.lname}}</td>
+                                     <td class="sorting_1">{{comments.title | truncate : 50 : "....."}}</td>
+                                     <td>{{comments.comment | truncate :20 : "....."}}</td>
+                                     <td>{{comments.created_date}}</td>
+                                 
+                                    
+                                     <td>
+                                        <a class="btn btn-success"  style="margin-right: 10px;" (click)="viewCommentInfo(info,comments)">
+                                        <i class="fa fa-eye"></i>
+                                        </a>
+                                       
+                                        <a class="btn btn-danger" (click)="deleteComment(templateDelete,comments.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                        </a>
+                                     </td>
+                                  </tr>
+                   
+                               </tbody>
+                            </table>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">{{perPage}} of {{totalEntries}} entries</div>
+                         </div>
+                         <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                               <ul class="pagination">
+                                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                               </ul>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+ <ng-template #info>
+      <div class="modal-header">
+            <h4 class="modal-title pull-left">Comment Details</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div>
+               
+                  <img src="{{currentcomments.image}}" name="aboutme" width="140" height="140" border="0" class="img-circle">
+                  <span style="    float: right;
+                  margin-right: 27px;"><b>{{currentcomments.created_date}}</b></span>
+                  <p style="margin-top:5px;" class="media-heading">{{currentcomments.name}} {{currentcomments.lname}} </p>
+      
+            </div>
+                  <hr>
+                  <div>
+                  <p class="text-left"><strong>{{currentcomments.title}} </strong><br>
+                     {{currentcomments.comment}}</p>
+                  <br>
+                  </div>
+               
+     
+      </div>
+    </ng-template>
+
+    <ng-template #templateDelete>
+         <div class="modal-header">
+            <h4 class="modal-title pull-left">Delete Comment</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefDel.hide()">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Are You sure you want to delete this comment?</p>
+            <button _ngcontent-c4="" class="btn btn-danger" type="button" (click) = "confirmDelete()">Yes</button>
+            <button _ngcontent-c4="" class="btn btn-success" style="float:right" type="button" (click)="modalRefDel.hide()">No</button>
+         </div>
+      </ng-template>

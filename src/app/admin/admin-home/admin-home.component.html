@@ -1,0 +1,163 @@
+
+
+    <main class="main">
+      <!-- Breadcrumb-->
+      <ol class="breadcrumb">
+       
+        <li class="breadcrumb-item active">Dashboard</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+          <div class="btn-group" role="group" aria-label="Button group">
+            
+          
+          </div>
+        </li>
+      </ol>
+      <div class="container-fluid">
+        <div class="animated fadeIn">
+          <div class="row">
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-primary">
+                <div class="card-body pb-0">
+                    <button class="btn btn-transparent p-0 float-right" type="button">
+                        <i class="icon-user"></i>
+                      </button>
+                  <div class="text-value" *ngIf="listCounts">{{listCounts.users}}</div>
+                  <div>Total Users</div>
+                </div>
+                <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                  <canvas class="chart" id="card-chart1" height="70"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-info">
+                <div class="card-body pb-0">
+                  <button class="btn btn-transparent p-0 float-right" type="button">
+                    <i class="icon-globe"></i>
+                  </button>
+                  <div class="text-value" *ngIf="listCounts">{{listCounts.news}}</div>
+                  <div>Total News</div>
+                </div>
+                <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                  <canvas class="chart" id="card-chart2" height="70"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-warning">
+                <div class="card-body pb-0">
+                    <button class="btn btn-transparent p-0 float-right" type="button">
+                        <i class="cui-comment-square icons"></i>
+                      </button>
+                  <div class="text-value" *ngIf="listCounts">{{listCounts.comments}}</div>
+                  <div>Total Comments</div>
+                </div>
+                <div class="chart-wrapper mt-3" style="height:70px;">
+                  <canvas class="chart" id="card-chart3" height="70"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-danger">
+                <div class="card-body pb-0">
+                    <button class="btn btn-transparent p-0 float-right" type="button">
+                        <i class="cui-dashboard icons"></i>
+                      </button>
+                  <div class="text-value" *ngIf="listCounts">{{listCounts.posts}}</div>
+                  <div>Total Posts</div>
+                </div>
+                <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                  <canvas class="chart" id="card-chart4" height="70"></canvas>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="col-lg-6">
+                <div class="card">
+                   <div class="card-header"><i class="fa fa-align-justify"></i> Most Recent Users </div>
+                   <div class="card-body">
+                      <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                         <thead>
+                            <tr>
+                               <th>Username</th>
+                               <th>Date registered</th>
+                               <th>Role</th>
+                               <th>Status</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <tr *ngFor="let item of listUsers; let i = index">
+                               <td>{{item.name}} {{item.lname}}</td>
+                               <td>{{item.created_at}}</td>
+                               <td>{{item.email}}</td>
+                               <td>
+                                  <span class="badge badge-success" *ngIf="item.status==1">Active</span>
+                                  <span class="badge badge-danger" *ngIf="item.status==0">Inactive</span>
+                               </td>
+                            </tr>
+                        
+                         </tbody>
+                      </table>
+            
+                   </div>
+                </div>
+             </div>
+
+             <div class="col-lg-6">
+                <div class="card">
+                   <div class="card-header"><i class="fa fa-align-justify"></i> Most Viewed Posts </div>
+                   <div class="card-body">
+                      <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                         <thead>
+                            <tr>
+                               <th>Username</th>
+                               <th>Title</th>
+                               <th>description</th>
+                               <th>Date</th>
+                               <th>Views</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <tr *ngFor="let items of listPosts; let i = index">
+                                <td>{{items.name}} {{items.lname}}</td>
+                                <td>{{items.title | truncate : 50 : "....."}}</td>
+                                <td [innerHTML] = "items.description| truncate : 50 : '.....'"></td>
+                                <td>
+                                  {{items.date}}
+                                </td>
+                                <td>
+                                    {{items.viewsCount}}
+                                  </td>
+                             </tr>
+                            
+                         </tbody>
+                      </table>
+             
+                   </div>
+                </div>
+             </div>
+
+
+
+
+
+            <!-- /.col-->
+          </div>
+          <!-- /.row-->
+     
+          <!-- /.row-->
+        </div>
+      </div>
+    </main>
+   

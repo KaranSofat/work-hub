@@ -1,0 +1,66 @@
+<form [formGroup]="socialForm" (ngSubmit)="update()">
+        <div class="row">
+            <div class="col-md-10 bottom-margin" >
+               <div class="card mt-4">
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col-md-10">
+                              <div class="jumbotron" style="padding: 29px;
+                            ">
+                              <h5>Contact Information</h5>
+                           </div>
+        
+                           <div class="jumbotron" style="padding: 29px;
+                            ">
+                              <p>Email: <b>{{userDetails.email}}</b></p>
+                              <p>phone: <b>{{userDetails.phone}}</b></p>
+                              <p>facebook: <b>{{userDetails.fb_url}}</b></p>
+                              <p>linkedin: <b>{{userDetails.link_url}}</b></p>
+                           </div>
+        
+                           
+        
+                           <div class="row">
+                               
+                              <div class="col-md-12">
+                                    <div class="  form-group  input-group ">
+                                            <div class=" input-group-addon"  [ngClass]="{ 'is-invalid': submitted && f.fb.errors }">
+                                                    <a class="btn-floating btn-lg btn-fb" type="button" role="button"><i class="fa fa-facebook-f"></i></a>
+                                   
+                                            </div>
+                                            <input type="text" class="form-control"  [(ngModel)]="socialFormData.fb" formControlName="fb" class="form-control" id="email_id" name="email_name"  [ngClass]="{ 'is-invalid': submitted && f.fb.errors }">
+                                           </div>
+        
+        
+                                           <div class="form-group  input-group">
+                                                <div class="input-group-addon"  [ngClass]="{ 'is-invalid': submitted && f.link.errors }">
+                                                        <a class="btn-floating btn-lg btn-li" type="button" role="button"><i class="fa fa-linkedin" style="margin:0 -3px 0 0px"></i></a>
+                                                 <!-- <i class="fa fa-linkedin-square" style="font-size: 35px;color:#3b5998;padding-left:7px;padding-right:9px">
+                                                 </i> -->
+                                                </div>
+                                                <input type="text" class="form-control"  [(ngModel)]="socialFormData.link" formControlName="link" class="form-control"  id="email_id" name="email_name"  [ngClass]="{ 'is-invalid': submitted && f.link.errors }">
+                                               </div>
+        
+        
+                                  <div class="form-group">
+                                      <!-- Submit button !-->
+                                      <button type="submit"  class="btn btn-secondary"style="background:#4362a7;">Update</button>
+                                   </div>
+        
+        
+                                </div>
+                                </div>
+                  
+        
+        
+        
+        
+                            </div>
+                      </div>
+                  </div>
+        
+                </div>
+                </div>
+                </div>
+        
+            </form>

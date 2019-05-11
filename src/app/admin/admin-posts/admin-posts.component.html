@@ -1,0 +1,158 @@
+
+ <div class="container-fluid">
+    <div id="ui-view">
+       <div>
+       
+          <div class="animated fadeIn">
+             <div class="card">
+                <div class="card-header">
+                   <i class="fa fa-edit"></i> Posts
+                   <div class="card-header-actions">
+                     
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                      <div class="row">
+                         <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="DataTables_Table_0_length">
+                               <label>
+                                  Show 
+                                  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" [(ngModel)]="perPage" class="custom-select custom-select-sm form-control form-control-sm">
+                                     <option value="10">10</option>
+                                     <option value="25">25</option>
+                                     <option value="50">50</option>
+                                     <option value="100">100</option>
+                                  </select>
+                                  entries
+                               </label>
+                            </div>
+                         </div>
+                         <div class="col-sm-12 col-md-6">
+                            <div id="DataTables_Table_0_filter" class="dataTables_filter searchBar"><label>Search:<input type="search" [(ngModel)]="searchText" class="form-control form-control-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-sm-12">
+                            <table class="table table-striped table-bordered datatable dataTable no-footer  table-responsive-sm table-bordered table-striped table-sm" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important">
+                               <thead>
+                                  <tr role="row">
+                                      <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 100px;">#</th>
+                                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 281px;">Title</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 240.2px;">Description</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 150px;">Date</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 121.8px;">Category</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 121.8px;">Status</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 249.2px;">Actions</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <tr role="row" class="odd" *ngFor="let posts of listPosts| paginate: { itemsPerPage: perPage, currentPage: p } | filter:searchText;index as i">
+                                      <td class="sorting_1">{{i+1}}</td>
+                                     <td class="sorting_1">{{posts.title | truncate : 50 : "....."}}</td>
+                                     <td [innerHTML] = "posts.description | truncate : 250 : '.....'"></td>
+                                     <td>{{posts.date}}</td>
+                                 
+                                     <td>
+                                       <span  [ngClass]="{'general':posts.categoryName == 'general', 'buy': posts.categoryName == 'buy', 'sell':posts.categoryName == 'sell','borrow':posts.categoryName == 'borrow'}">{{posts.categoryName}}</span>
+                                     </td>
+                                     <td>
+                                       <span class="badge badge-success" style="color:white;background: green;cursor:pointer" *ngIf="posts.status==1" (click)="changePostStatus('inactive',templatechangeStatus,posts.id)">Active</span>
+                                       <span class="badge badge-danger"style="color:white;background: red;cursor:pointer"  *ngIf="posts.status==0" (click)="changePostStatus('active',templatechangeStatus,posts.id)">Inactive</span>
+                                    </td>
+                                     <td>
+                                        <a class="btn btn-success"  style="margin-right: 10px;" (click)="viewPostInfo(info,posts)">
+                                             <i class="fa fa-eye"></i>
+                                        </a>
+                                       
+                                   
+                                        <a class="btn btn-danger" (click)="deletePost(templateDelete,posts.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                        </a>
+                                     </td>
+                                  </tr>
+                   
+                               </tbody>
+                            </table>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">{{perPage}} of {{totalEntries}} entries</div>
+                         </div>
+                         <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                               <ul class="pagination">
+                                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                               </ul>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+
+ <ng-template #info>
+      <div class="modal-header">
+            <h4 class="modal-title pull-left">Post Details</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div>
+                  <img src="{{currentPost.image}}" name="aboutme" style="object-fit: cover;" width="140" height="140" border="0" class="img-circle">
+                  <p style="margin-top:5px;" class="media-heading">{{currentPost.name}} {{currentPost.lname}} </p>
+      
+            </div>
+                  <hr>
+                  <div>
+                  <p class="text-left"><strong>{{currentPost.title}} </strong><br>
+                     <span [innerHTML] = "currentPost.description"></span></p>
+                  <br>
+                  </div>
+                  <div *ngFor="let postsImages of currentPost.files">
+                   <img style="    width: 150px;
+                   height: 160px;
+                   object-fit: cover;    float: left;
+    padding-right: 15px;" src={{postsImages}}> 
+
+                  </div>
+     
+      </div>
+    </ng-template>
+
+
+    <ng-template #templateDelete>
+         <div class="modal-header">
+            <h4 class="modal-title pull-left">Delete Post</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefDel.hide()">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Are You sure you want to delete this Post?</p>
+            <button _ngcontent-c4="" class="btn btn-danger" type="button" (click) = "confirmDelete()">Yes</button>
+            <button _ngcontent-c4="" class="btn btn-success" style="float:right" type="button" (click)="modalRef.hide()">No</button>
+         </div>
+      </ng-template>
+
+      <ng-template #templatechangeStatus>
+         <div class="modal-header">
+            <h4 class="modal-title pull-left">Change Status</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefStatus.hide()">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Are You sure you want to {{postStatus}} this Post?</p>
+            <button _ngcontent-c4="" class="btn btn-danger" type="button" (click) = "confirmChangeStatus()">Yes</button>
+            <button _ngcontent-c4="" class="btn btn-success" style="margin-left:10px" type="button" (click)="modalRefStatus.hide()">No</button>
+         </div>
+      </ng-template>

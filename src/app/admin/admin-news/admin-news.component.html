@@ -1,0 +1,227 @@
+
+ <div class="container-fluid">
+    <div id="ui-view">
+       <div>
+       
+          <div class="animated fadeIn">
+             <div class="card">
+                <div class="card-header">
+                   <i class="fa fa-edit"></i> News
+                   <div class="card-header-actions">
+                     
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                      <div class="row">
+                         <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="DataTables_Table_0_length">
+                               <label>
+                                  Show 
+                                  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" [(ngModel)]="perPage" class="custom-select custom-select-sm form-control form-control-sm">
+                                     <option value="10">10</option>
+                                     <option value="25">25</option>
+                                     <option value="50">50</option>
+                                     <option value="100">100</option>
+                                  </select>
+                                  entries
+                               </label>
+                            </div>
+                         </div>
+                         <div class="col-sm-12 col-md-6">
+                            <div id="DataTables_Table_0_filter"class="dataTables_filter searchBar"><label>Search:<input type="search" [(ngModel)]="searchText" class="form-control form-control-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div>
+                         </div>
+                      </div>
+                      <div>
+                           <button _ngcontent-c4="" (click)="addNews(addNewsPop);"aria-pressed="true" class="btn btn-block btn-outline-primary active" type="button" style="
+                           width: 111px;
+                           margin: 0 0 17px 0;
+                       ">Add News</button>
+                      </div>
+                      <div class="row">
+                         <div class="col-sm-12">
+                            <table class="table table-striped table-bordered datatable dataTable no-footer  table-responsive-sm table-bordered table-striped table-sm" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important">
+                               <thead>
+                                  <tr role="row">
+                                      <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 100px;">#</th>
+                                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 281px;">title</th>
+                                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 281px;">Description</th>
+                                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 281px;">Date</th>
+                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 249.2px;">Actions</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <tr role="row" class="odd" *ngFor="let news of listNews| paginate: { itemsPerPage: perPage, currentPage: p } | filter:searchText;index as i">
+                                      <td class="sorting_1">{{i+1}}</td>
+                                     <td class="sorting_1">{{news.title | truncate : 50 : "....."}}</td>
+                                     <td class="sorting_1">{{news.description | truncate : 50 : "....."}}</td>
+                                     <td class="sorting_1">{{news.date }}</td>
+                                     <td>
+                                        <a class="btn btn-success"  style="margin-right: 10px;" (click)="viewNewsInfo(info,news)">
+                                            <i class="fa fa-eye"></i>
+                                            </a>
+                                        <!-- <a class="btn btn-info" >
+                                        <i class="fa fa-edit"></i>
+                                        </a> -->
+                                        <a class="btn btn-danger" (click)="deleteNews(templateDelete,news.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                        </a>
+                                     </td>
+                                  </tr>
+                   
+                               </tbody>
+                            </table>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">{{perPage}} of {{totalEntries}} entries</div>
+                         </div>
+                         <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                               <ul class="pagination">
+                                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                               </ul>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+ 
+ <ng-template #info>
+    <div class="modal-header">
+          <h4 class="modal-title pull-left">News Details</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+          <div>
+             
+               
+                <span style="    float: right;
+                margin-right: 27px;"><b>{{currentNews.date}}</b></span>
+              
+    
+          </div>
+          <strong>{{currentNews.title}} </strong>
+                <hr>
+                <div>
+                <p class="text-left"><br>
+                   {{currentNews.description}}</p>
+                <br>
+                </div>
+                <div *ngFor="let commentImages of currentNews.files">
+                     <img style="    width: 150px;
+                     height: 160px;
+                     object-fit: cover;    float: left;
+      padding-right: 15px;" src={{commentImages}}> 
+  
+                    </div>
+   
+    </div>
+  </ng-template>
+
+
+
+  <ng-template #addNewsPop>
+      <div class="modal-header">
+            <h4 class="modal-title pull-left">Add News</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefNews.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="row">
+                  <div class="col-md-12">
+                     <div class="card">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="jumbotron" style="padding: 29px;
+                                 margin: 0px;">
+                                 <h5>CREATE NEWS</h5>
+                                
+                              </div>
+                           </div>
+                        </div>
+                        <form class="signup"  [formGroup]="postForm" (ngSubmit)="publishPost()">
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group"  [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.title.errors }"> 
+                                    <label for="email_id" class="control-label"> Title</label>
+                                    <input type="text" [(ngModel)]="postData.title"   [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.title.errors }" formControlName="title" class="form-control"  class="form-control" id="email_id" name="email_name" placeholder="Title" 
+                                       >
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group" [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.description.errors }"> 
+                                    <label for="email_id" class="control-label">Description</label>
+                                    <app-ngx-editor [placeholder]="'Enter text here...'" height="200px" minHeight="100px" [spellcheck]="true"  [(ngModel)]="postData.description" [(ngModel)]="postData.description"  [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.description.errors }" formControlName="description"  id="comment" placeholder="Description"></app-ngx-editor>
+                                    <div class="invalid-feedback" *ngIf="submittedPostForm && postFormControls.description.errors">
+                                          <div  *ngIf="postFormControls.description.errors.required">Description is required.</div>		
+                                          <div  *ngIf="postFormControls.description.errors.minlength">Description must be atleast 50 characters.</div>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                           
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group"> 
+                                      <div *ngFor='let url of urls' style="padding: 0 25px 0 0; float:left;">
+                                           
+                                            
+                                            <img    [src]="url" class="rounded-circle" style="width:100px;height:150px;object-fit: cover">
+                                            <a (click)="removeImg(url,$index)" class="card-link" style="cursor: pointer;"><i class="material-icons " style="position: absolute;color:red">
+                                                  delete_forever
+                                                  </i></a>
+                                           </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group">
+                                    <label for="email_id" class="control-label">Upload Image</label>
+                                    <div class="custom-file">
+                                       <input type="file" class="custom-file-input" id="customFile"  (change)="onSelectFile($event)" multiple>
+                                       <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <!-- Submit button !-->
+                              <button  type="submit" class="btn btn-secondary"style="background:#4362a7;">Create News</button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+               
+     
+      </div>
+    </ng-template>
+
+    <ng-template #templateDelete>
+         <div class="modal-header">
+            <h4 class="modal-title pull-left">Delete News</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefDel.hide()">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Are You sure you want to delete this News?</p>
+            <button _ngcontent-c4="" class="btn btn-danger" type="button" (click) = "confirmDelete()">Yes</button>
+            <button _ngcontent-c4="" class="btn btn-success" style="float:right" type="button" (click)="modalRefDel.hide()">No</button>
+         </div>
+      </ng-template>

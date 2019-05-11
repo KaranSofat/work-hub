@@ -1,0 +1,186 @@
+<div class="row">
+        <div class="col-md-10 bottom-margin" >
+           <div class="card mt-4" *ngFor="let posts of listPosts">
+              <div class="card-body" [ngClass]="{'border-blue':posts.categoryName == 'general', 'border-green': posts.categoryName == 'buy', 'border-pink':posts.categoryName == 'sell','border-borrow':posts.categoryName == 'borrow'}">
+                 <div class="row">
+               
+                    <div class="col-md-10" style="cursor: pointer;" (click) = "details($event,posts)">
+                       <img  
+                    class="rounded-circle"  style="    width: 63px;
+                        object-fit: cover;
+                        height: 67px;" src="{{posts.image}}"  ><span class="font-weight-bold pl-3"  >{{posts.name}} {{posts.lname}}</span>
+                       <!--  <span class="general">General</span> -->
+                       <h5 class="card-title mt-3">{{posts.title}}</h5>
+                       <p class="card-text" [innerHTML]="posts.description | words : 150 : '.....'">
+                       </p>
+                      
+                       <div class="row post_images" >
+                        <img class="images_posts" *ngFor="let postsImages of posts.files" style="     width: 100px;
+                        height: 163px;
+                        object-fit: cover;   margin-right: 30px;" (click) = "openImage(images,$event,postsImages)" src = "{{postsImages}}">
+                     
+                       </div>
+                       <a (click) = "deletePost(templateDelete,posts,$event)" class="card-link"><i class="material-icons ">
+                            delete
+                            </i>Delete</a>
+
+                            <a (click) = "editPost(editPostTemp,posts,$event)" class="card-link"><i class="material-icons ">
+                              edit
+                              </i>Edit</a>
+
+                    </div>
+                    
+                    <div class="col-md-2 icon-ba">
+                            <p class="">{{posts.date | timeAgo}}</p>
+                       <span [ngClass]="{'general':posts.categoryName == 'general', 'buy': posts.categoryName == 'buy', 'sell':posts.categoryName == 'sell','borrow':posts.categoryName == 'borrow'}">
+                          <!-- <i class="material-icons" style="margin: -2px;">stop</i> -->{{posts.categoryName}}
+                       </span>
+                       <a href="#" class="card-link">
+                          <i class="material-icons ">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                             </svg>
+                          </i>
+                          {{posts.viewsCount}}
+                       </a>
+                       <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">star</i>{{posts.bookmarksCount}}</a>
+                       <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">comment</i>{{posts.commentsCount}}</a>
+                       
+                     
+                     </div>
+                    <div class="col-md-12">
+                     <a *ngIf="posts.status == 1" class="postActive">Active</a>
+                     <a *ngIf="posts.status == 0" class="postINActive">InActive</a>
+                    </div> 
+                    
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <div class="row" *ngIf = "listPosts">
+        <div class="col-md-10 bottom-margin"  *ngIf = "listPosts.length == 0">
+           <div class="card mt-4">
+     <div style="
+     text-align: center;
+     font-size: 21px;
+     margin: 0px 0 0 0;
+     padding: 22px 0 24px 13px;
+ ">No post Created Yet..</div>
+     </div>
+     </div>
+     </div>
+
+     <ng-template #templateDelete>
+            <div class="modal-header">
+               <h4 class="modal-title pull-left">Delete Post</h4>
+               <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <p>Are You sure you want to delete this Post?</p>
+               <button _ngcontent-c4="" class="btn btn-danger" type="button" (click) = "confirmDelete()">Yes</button>
+               <button _ngcontent-c4="" class="btn btn-success" style="margin-left:10px;" type="button" (click)="modalRef.hide()">No</button>
+            </div>
+         </ng-template>
+
+
+         <ng-template #editPostTemp>
+            <div class="modal-header">
+               <h4 class="modal-title pull-left">Edit Post</h4>
+               <button type="button" class="close pull-right" aria-label="Close" (click)="editPostTemps.hide()">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="card">
+                       
+                        <form class="signup"  [formGroup]="postForm" (ngSubmit)="publishPost()">
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group"  [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.title.errors }"> 
+                                    <label for="email_id" class="control-label"> Title</label>
+                                    <input type="text" [(ngModel)]="postData.title"   [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.title.errors }" formControlName="title" class="form-control"  class="form-control" id="email_id" name="email_name" placeholder="Title" 
+                                       >
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group" [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.description.errors }"> 
+                                    <label for="email_id" class="control-label">Description</label>
+                                    <app-ngx-editor [placeholder]="'Enter text here...'" height="200px" minHeight="100px" [spellcheck]="true"  [(ngModel)]="postData.description" [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.description.errors }" formControlName="description"  id="comment" placeholder="Description"></app-ngx-editor>
+                                    <!-- <textarea class="form-control" rows="5" [(ngModel)]="postData.description"  [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.description.errors }" formControlName="description"  id="comment" placeholder="Description"></textarea> -->
+                                    <div class="invalid-feedback" *ngIf="submittedPostForm && postFormControls.description.errors">
+                                         <div  *ngIf="postFormControls.description.errors.required">Description is required.</div>		
+                                         <div  *ngIf="postFormControls.description.errors.minlength">Description must be atleast 50 characters.</div>
+                                      </div>
+                               
+                                   </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group" [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.category.errors }">
+                                    <label for="email_id" class="control-label">Select Catogries</label>
+                                    <select class="form-control" id="sel1" [(ngModel)]="postData.category" (change) = "selectCategories()" [ngClass]="{ 'is-invalid': submittedPostForm && postFormControls.category.errors }" formControlName="category">
+                                       <option value="">Select Catogries</option>
+                                       <option value="{{cat.id}}" style="text-transform: capitalize;" *ngFor="let cat of categories">{{cat.name}}</option>
+                                     
+                                     
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <div class="form-group"> 
+                                      <div *ngFor='let url of urls' style="padding: 0 25px 0 0; float:left;">
+                                           
+                                            
+                                            <img    [src]="url" class="rounded-circle" style="width:100px;height:150px;object-fit: cover">
+                                            <a (click)="removeImg(url,$index)" class="card-link" style="cursor: pointer;"><i class="material-icons " style="position: absolute;color:red">
+                                                  delete_forever
+                                                  </i></a>
+                                           </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row" *ngIf="catName != 'general'">
+                              <div class="col-md-12">
+                                 <div class="form-group">
+                                    <label for="email_id" class="control-label">Upload Image</label>
+                                    <div class="custom-file">
+                                       <input type="file" class="custom-file-input" id="customFile"  (change)="onSelectFile($event)" multiple accept="image/*">
+                                       <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <!-- Submit button !-->
+                              <button  class="btn btn-secondary"style="background:#4362a7;">Update Post</button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </ng-template>
+
+         <ng-template #images>
+            <div class="modal-header">
+                  <h4 class="modal-title pull-left">Image</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefImage.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               <img src="{{selectedImage}}">
+      
+           
+            </div>
+          </ng-template>

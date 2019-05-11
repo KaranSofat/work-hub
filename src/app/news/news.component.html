@@ -1,0 +1,48 @@
+
+
+    <div class="row">
+      <div class="col-md-10 ">
+       
+        <div class="card" style="display:inherit">
+            <div class="row">
+                <div class="col-md-12">
+                   <div class="jumbotron" style="padding: 29px;
+                      margin: 0px;">
+                      <h4>Latest News</h4>
+                   </div>
+                </div>
+             </div>
+             <div *ngIf = "listNews">        <ul class="timeline" *ngIf = "listNews.length > 0">
+          <li *ngFor="let news of listNews">
+            <a target="_blank" style="font-size:18px;font-weight:bold">{{news.title}}</a>
+            <a href="#" class="float-right">{{news.date | timeAgo}}</a>
+            <p [innerHTML]="news.description" style="    margin-top: 25px;"></p>
+            <div *ngFor="let image of news.files">
+                <img src="{{image}}" style="    width: 235px;
+                height: 174px;
+                object-fit: cover;">
+            </div>
+          
+          </li>
+         
+        </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf = "listNews">
+        <div class="col-md-10 bottom-margin"  *ngIf = "listNews.length == 0">
+           <div class="card mt-4">
+     <div style="
+     text-align: center;
+     font-size: 21px;
+     margin: 0px 0 0 0;
+     padding: 22px 0 24px 13px;
+ ">No News Posted Yet.</div>
+     </div>
+     </div>
+     </div>
+  
+  
+ 

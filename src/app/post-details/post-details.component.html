@@ -1,0 +1,257 @@
+<div class="row">
+    <div class="col-md-12 col-lg-9 bottom-margin">
+       <div class="card mt-4">
+          <div class="card-body">
+             <div class="row">
+                <div class="col-md-10">
+                   <img  [popper]="popper1Content"
+                   (popperOnShown)="onShown($event,postDetails[0])"
+                   [popperTrigger]="'hover'"
+                   [popperPositionFixed]="true"
+                   [popperPlacement]="'right-start'" popperApplyClass = "customPop" class="rounded-circle" src="{{postDetails[0].image}}" style="    width: 63px;
+                   object-fit: cover;
+                   height: 67px;cursor: pointer;"><span class="font-weight-bold pl-3"  style="text-transform: capitalize;">{{postDetails[0].name}} {{postDetails[0].lname}}</span>
+                   <span style="float:right;">
+                   <a (click) = "bookMarkPost(postDetails,$event)" style="cursor:pointer" class="card-link"><i class="material-icons ">
+                   bookmark_border
+                   </i>Save</a>
+                   <a (click)="postShare(share)" class="card-link upperIcons" style="cursor:pointer"><i class="material-icons ">
+                   share
+                   </i>Share</a>
+                   </span>
+                   <h5 class="card-title mt-3">{{postDetails[0].title}}</h5>
+                   <p class="card-text" [innerHTML]="postDetails[0].description">
+                        
+                   </p>
+
+                   <div class="row post_images" >
+                        <img class="images_posts" *ngFor="let postsImages of postDetails[0].files" style="     width: 173px;
+                        height: 164px;
+                        object-fit: cover; cursor: pointer;   margin-right: 30px;" (click) = "openImage(images,$event,postsImages)" src = "{{postsImages}}">
+                     
+                       </div>
+                </div>
+                <div class="col-md-2 icon-ba">
+                   <span class="general">
+                     General
+                   </span>
+                   <a href="#" class="card-link">
+                      <i class="material-icons ">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                         </svg>
+                      </i>
+                      {{postDetails[0].viewsCount}}
+                   </a>
+                   <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">star</i> {{postDetails[0].bookmarksCount}}</a>
+                   <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">comment</i> {{postDetails[0].commentsCount}}</a>
+                </div>
+             </div>
+             <div class="card-body">
+                <h4>{{totalComments}} comments</h4>
+             </div>
+             <div class="card-body" *ngFor="let posts of commentsPost">
+                <div class="row">
+                   <div class="col-sm-2">
+                      <div class="thumbnail"><img class="rounded-circle" style="width: 68px;    object-fit: cover;
+                        height: 77px;" src={{posts.image}}></div>
+                   </div>
+                   <div class="col-sm-10">
+                      <div class="card card-inner">
+                         <div class="card-title-top">
+                            <strong class="font-weight-bold">{{posts.name}} {{posts.lname}} </strong><span>commented {{posts.created_date |  timeAgo}}</span> 
+                         </div>
+                         <!-- <h5 class="card-title mt-3">{{postDetails[0].title}}</h5> -->
+                         
+                         <p class="card-text"  [innerHTML] =  "posts.comment "></p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="card-body comments">
+               <div class="row ">
+                  <div class="col-sm-2">
+                     <div class="thumbnail"><img class="rounded-circle" *ngIf=
+                       "userDetails" src="{{userDetails.image}}" style="width: 68px;    height: 80px;
+                       object-fit: cover;">
+                       <img class="rounded-circle" *ngIf=
+                       "!userDetails" src="./assets/images/deault.png" style="width: 68px;"></div>
+                  </div>
+                  
+                  <div class="col-sm-10">
+                        
+                     <form [formGroup]="commentForm">
+                        <div class="row">
+                           <div class="col-md-8 " >
+                              <textarea class="form-control" [(ngModel)]="commentsData.comment"   formControlName="comment" placeholder="Add a Comment..." rows="5" cols="8"> </textarea>
+                              
+                             <div class="form-row fix_icons">
+                                <a class="nav-link " style="cursor:pointer; display: inherit;">
+                                <i class="material-icons icons_color" (click)="toggled = !toggled"
+                                [(emojiPickerIf)]="toggled"
+                                [emojiPickerDirection]=" 'top'"
+                                (emojiPickerSelect)="handleSelection($event)">
+                                sentiment_very_satisfied
+                                </i>
+                                </a>
+                                <a class="nav-link " style="cursor:pointer;width: 38px;padding: 10px 5px 0px; display: inherit;">
+                                    <label for="file-input"> 
+                                <i class="material-icons icons_color">
+                                camera_alt
+                                </i>
+                                </label>
+                                <input id="file-input" type="file" (change)="onFileChanged($event)" accept="image/*"/>
+                                </a>
+                              
+                                <a class="nav-link " style="cursor:pointer; display: inherit;">
+                                <i class="material-icons icons_color">
+                                videocam
+                                </i>
+                                </a>
+                                <a class="nav-link " style="cursor:pointer; display: inherit;" (click)="toggleGiphySearch()">
+                                <i class="material-icons icons_color">
+                                gif
+                                </i>
+                                </a>
+                               
+                             </div>
+                           
+
+                             
+
+                           </div>
+                             
+                           <div class="col-md-4 " style="
+                              margin-top: 10px;
+                              ">
+                              <button type="button" (click)="comment()" class="btn btn-secondary">Add commment</button>
+                           </div>
+                        </div>
+
+                        
+                     </form>
+                  </div>
+                 
+               </div>
+            </div>
+
+            <div  class="giphy-search" *ngIf="showGiphySearch">
+               <div class="col-md-12 giphy-top">
+                 
+                  <span class="sticker" (click) = "getGiphyIcons('stickers')" [ngClass]="{'giphyActive':tabSelected == 'stickers'}">Stickers</span>
+                  <span  class="sticker"  (click) = "getGiphyIcons('gifs')" [ngClass]="{'giphyActive':tabSelected == 'gifs'}">Gifs</span>
+                  <input type ="text" placeholder="Search for a GIF" [(ngModel)] = "giphySearchTerm" (change) = "searchGiphy()"class="giphy-input"> 
+
+               </div>
+                  <img *ngFor="let result of giphyResults" style="height: 160px;
+                  width: 135px; margin: 0 0px 10px 24px;cursor:pointer" src="{{ result.images.downsized_large.url }}"
+                  (click)="sendGif(result.title, result.images.original.url)">
+            
+               </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+ <ng-template #share>
+      <div class="modal-header">
+            <h4 class="modal-title pull-left">Share</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefShare.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+            <form>
+                  <label>Share the post with the world</label>
+                    <div class="form-group">
+                        <share-button text="Share" [showText]="true" button="facebook"  [showCount]="true" [url]=urlShare></share-button>
+<share-button button="linkedin" text="linkedin"  [showText]="true" [showCount]="true" [url]=urlShare></share-button>
+<share-button button="twitter" text="Tweet" [showText]="true" [showCount]="true" [url]=urlShare></share-button>
+                       
+                    </div>
+                 
+                   
+               
+                </form>
+     
+      </div>
+    </ng-template>
+
+    <popper-content #popper1Content style="width:50%; background:white">
+      
+         <div class="row">
+            <div class="col">
+                  <img class="rounded-circle" *ngIf = "currentSelectedPost" style="width: 63px;" src="{{currentSelectedPost.image}}"><span class="font-weight-bold pl-3"  *ngIf = "currentSelectedPost">{{currentSelectedPost.name}} {{currentSelectedPost.lname}}</span>
+            </div>
+            
+            <div class="col">
+                  <button type="button" (click)= "message(messagePop)"class="btn btn-secondary " style="float:right; background: #4362a7;    margin-top: 14px;"><i  style="margin:0 9px 0 0;" class="fa fa-envelope" aria-hidden="true"></i>Message</button>
+            </div>
+            <div class="col-md-8 ml-5 message-pop"  *ngIf = "currentSelectedPost">
+            <p style="font-size:12px; margin-left: 45px;"> posted  {{currentSelectedPost.date | timeAgo}}  Joined {{currentSelectedPost.created_at | date}}</p>
+        </div>
+           
+            
+         </div>   
+         
+        
+             
+           
+           
+          </popper-content>
+
+          <ng-template #messagePop>
+               <div class="modal-header">
+                     <h4 class="modal-title pull-left">Message</h4>
+                 <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefMessage.hide()">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <div class="modal-body">
+                  <form  [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+                     <div class="row">
+                        <div class="col" style="    border-bottom: 1px solid #e9ecef;
+                        padding-bottom: 14px;">
+                           <img class="rounded-circle" *ngIf = "currentSelectedPost" style="width: 63px;" src="{{currentSelectedPost.image}}"><span class="font-weight-bold pl-3"  *ngIf = "currentSelectedPost">{{currentSelectedPost.name}} {{currentSelectedPost.lname}}</span>
+                        </div>
+                        </div>
+                     <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group"  [ngClass]="{ 'is-invalid': submittedMessage && fMessage.title.errors }"> 
+                                 <label for="email_id" class="control-label"> Title</label>
+                                 <input type="text" [(ngModel)]="messageData.title"   [ngClass]="{ 'is-invalid': submittedMessage && fMessage.title.errors }" formControlName="title" class="form-control"  class="form-control" id="email_id" name="email_name" placeholder="Title" 
+                                    >
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row" style="margin-top: 12px;">
+                           <div class="col-md-12">
+                              <div class="form-group" [ngClass]="{ 'is-invalid': submittedMessage && fMessage.description.errors }"> 
+                                 <label for="email_id" class="control-label">Description</label>
+                                 <textarea class="form-control" rows="5" [(ngModel)]="messageData.description"  [ngClass]="{ 'is-invalid': submittedMessage && fMessage.description.errors }" formControlName="description"  id="comment" placeholder="Description"></textarea>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                              <!-- Submit button !-->
+                              <button type="submit" class="btn btn-secondary"style="background:#4362a7;">Send Message</button>
+                           </div>
+                        </form>
+               </div>
+             </ng-template>
+
+             <ng-template #images>
+               <div class="modal-header">
+                     <h4 class="modal-title pull-left">Image</h4>
+                 <button type="button" class="close pull-right" aria-label="Close" (click)="modalRefImage.hide()">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <div class="modal-body">
+                  <img src="{{selectedImage}}">
+         
+              
+               </div>
+             </ng-template>
