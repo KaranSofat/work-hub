@@ -11,7 +11,7 @@
                    [popperPlacement]="'right-start'" popperApplyClass = "customPop" class="rounded-circle" src="{{postDetails[0].image}}" style="    width: 63px;
                    object-fit: cover;
                    height: 67px;cursor: pointer;"><span class="font-weight-bold pl-3"  style="text-transform: capitalize;">{{postDetails[0].name}} {{postDetails[0].lname}}</span>
-                   <span style="float:right;">
+                   <span style="float:right;" class="social-share">
                    <a (click) = "bookMarkPost(postDetails,$event)" style="cursor:pointer" class="card-link"><i class="material-icons ">
                    bookmark_border
                    </i>Save</a>
@@ -40,8 +40,7 @@
                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                             <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
                          </svg>
-                      </i>
-                      {{postDetails[0].viewsCount}}
+                      </i>{{postDetails[0].viewsCount}}
                    </a>
                    <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">star</i> {{postDetails[0].bookmarksCount}}</a>
                    <a href="#" class="card-link"><i class="material-icons " style="color:#000000;font-size: 18px;">comment</i> {{postDetails[0].commentsCount}}</a>
@@ -250,7 +249,7 @@
                  </button>
                </div>
                <div class="modal-body">
-                  <img src="{{selectedImage}}">
+                  <img style="width: 100%;" src="{{selectedImage}}">
          
               
                </div>

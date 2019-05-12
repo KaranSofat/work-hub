@@ -286,6 +286,20 @@ text-transform: capitalize;
 
 
 @media screen and (max-width: 576px) {
+  .dropdown-menu {
+		top: 148px !important;
+    left: 18px !important;
+    width: 200px  !important;
+	}
+  .social-share{
+        /* float: right; */
+        display: table !important;
+        position: absolute!important;
+        bottom: 0px!important;
+        /* top: 8px; */
+        /* margin-top: -17px; */
+        padding: 9px!important;
+  }
   .postActive{
     background: green;
     color: white !important;
@@ -327,7 +341,7 @@ text-transform: capitalize;
     .icon-ba a {
          display: inline-block !important;
          float: left !important;
-         width: 54px !important;
+         width: 48px  !important;
          margin: 0 !important;
          padding: 0 !important;
          text-align: right !important;
@@ -363,7 +377,10 @@ text-transform: capitalize;
 
 
   @media screen and (max-width: 768px) {
+    .dropdown-menu {
+      top: 148px !important;
     
+    }
     .customPop {
         width: 90% !important;
         background: white;
@@ -856,17 +873,13 @@ text-transform: capitalize;
     margin: 0px;
 }
 @media (max-width: 640px) {
-	.dropdown-menu {
-		top: 148px;
-    left: 39px;
-    width: 208px;
-	}
+
 	.nav {
 		display: block;
 	}
 	.nav .nav-item,
 	.nav .nav-item a {
-		padding-left: 0px;
+		/* padding-left: 0px; */
 	}
 	.message {
 		font-size: 13px;

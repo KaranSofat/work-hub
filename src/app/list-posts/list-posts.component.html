@@ -17,7 +17,7 @@
                        <div class="row post_images" >
                         <img class="images_posts" *ngFor="let postsImages of posts.files" style="     width: 100px;
                         height: 163px;
-                        object-fit: cover;   margin-right: 30px;" (click) = "openImage(images,$event,postsImages)" src = "{{postsImages}}">
+                        object-fit: cover;   margin-right: 30px;" (click) = "openImage(images,$event,postsImages)" src = "{{postsImages.postImage}}">
                      
                        </div>
                        <a (click) = "deletePost(templateDelete,posts,$event)" class="card-link"><i class="material-icons ">
@@ -141,7 +141,7 @@
                                       <div *ngFor='let url of urls' style="padding: 0 25px 0 0; float:left;">
                                            
                                             
-                                            <img    [src]="url" class="rounded-circle" style="width:100px;height:150px;object-fit: cover">
+                                            <img    [src]="url.postImage" class="rounded-circle" style="width:100px;height:150px;object-fit: cover">
                                             <a (click)="removeImg(url,$index)" class="card-link" style="cursor: pointer;"><i class="material-icons " style="position: absolute;color:red">
                                                   delete_forever
                                                   </i></a>
@@ -179,7 +179,7 @@
               </button>
             </div>
             <div class="modal-body">
-               <img src="{{selectedImage}}">
+               <img style="width: 100%;" src="{{selectedImage}}">
       
            
             </div>

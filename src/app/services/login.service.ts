@@ -216,6 +216,16 @@ public messageData(data: any){
   createSignature(jsonPayload):Observable<any>{
     return this.http.post(AppSettings.API_ENDPOINT + 'updateSignature',jsonPayload);
   }
+
+  addPostImage(jsonPayload):Observable<any>{
+    return this.http.post(AppSettings.API_ENDPOINT + 'addPostImage',jsonPayload);
+  }
+  updatePost(jsonPayload):Observable<any>{
+    return this.http.post(AppSettings.API_ENDPOINT + 'updatePost',jsonPayload);
+  }
+  deletePostImage(id):Observable<any>{
+    return this.http.post(AppSettings.API_ENDPOINT + 'deletePostImage/'+id,{});
+  }
   messageSeen(jsonPayload):Observable<any>{
     return this.http.post(AppSettings.API_ENDPOINT + 'messageSeen',jsonPayload);
   }

@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   unreadMessage:'';
   notifications:any;
   notificationsList:'';
+  intervalId:any;
   constructor(private _cookieService:CookieService,private toastr: ToastrService,private modalService: BsModalService,private router : Router, private ngxService: NgxUiLoaderService, private formBuilder: FormBuilder,  private loginService: LoginService,) { 
     this.subscribeRouterEvents();
     let cookies = String(_cookieService.get('remember'));
@@ -61,8 +62,15 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    let userDetails = this.loginService.getUserDetails();
+    if(userDetails){
+      this.intervalId = setInterval(() => {
+        this.getUnreadMessage(userDetails.id);
+        this.getNotifications(userDetails.id); 
+      }, 20000);
+    }
     
-  
+ 
     this.signinForm = this.formBuilder.group({    
              username: ['', [Validators.required]],
              password: ['', [Validators.required]],
@@ -156,7 +164,7 @@ export class HeaderComponent implements OnInit {
           res => {
             let seenArr = []
             this.notificationsList = res['success'];
-            console.log(this.notificationsList)
+   
             for(var i=0; i< this.notificationsList.length; i++){
               if(this.notificationsList[i]['seen'] == 0){
                 seenArr.push(this.notificationsList[i]);
@@ -223,6 +231,7 @@ export class HeaderComponent implements OnInit {
     )
    }
    logout(){
+    clearInterval(this.intervalId);
     this.ngxService.start()
     this.loginService.deleteToken();
     this.loginService.deleteUserDetails();

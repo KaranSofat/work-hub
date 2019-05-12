@@ -54,14 +54,17 @@ const routes: Routes = [ {
   },{
     path: 'posts',
     component: ListPostsComponent,
+    canActivate:[AuthGuard],
     pathMatch: 'full'
   },{
     path: 'settings',
     component: SettingsComponent,
+    canActivate:[AuthGuard],
     pathMatch: 'full'
   },{
     path: 'messages',
     component: MessagesComponent,
+    canActivate:[AuthGuard],
     pathMatch: 'full'
   },
   {
@@ -89,7 +92,7 @@ const routes: Routes = [ {
   {
     path: 'createPost/:title/:cat',
     component: CreatePostComponent,
-   // canActivate:[AuthGuard],
+    canActivate:[AuthGuard],
     pathMatch: 'full'
   },{
     path: 'forgotPassword/:id',
@@ -99,6 +102,7 @@ const routes: Routes = [ {
   {
     path: 'userInfo',
     component: PersonalInfoComponent,
+    canActivate:[AuthGuard],
     pathMatch: 'full'
   },
   {

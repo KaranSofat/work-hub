@@ -68,7 +68,7 @@ export class PostDetailsComponent implements OnInit {
         break;
       }
     }
-
+    console.log(this.postDetails)
     this.commentForm = this.formBuilder.group({    
       comment: ['', [Validators.required]],
   });
